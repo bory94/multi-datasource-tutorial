@@ -1,0 +1,45 @@
+spring:
+
+  primary:
+    datasource:
+      url: jdbc:mysql://localhost:3307/primary_db
+      username: root
+      password: root
+    jpa:
+      hibernate:
+        ddl-auto: validate
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQL8Dialect
+          format_sql: true
+          show-sql: true
+          order_inserts: true
+          order_updates: true
+          jdbc:
+            batch_size: 500
+            fetch_size: 500
+            batch_versioned_data: true
+
+  secondary:
+    datasource:
+      url: jdbc:mysql://localhost:3307/secondary_db
+      username: root
+      password: root
+    jpa:
+      hibernate:
+        ddl-auto: validate
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQL8Dialect
+          format_sql: true
+          show-sql: true
+          order_inserts: true
+          order_updates: true
+          jdbc:
+            batch_size: 500
+            fetch_size: 500
+            batch_versioned_data: true
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
