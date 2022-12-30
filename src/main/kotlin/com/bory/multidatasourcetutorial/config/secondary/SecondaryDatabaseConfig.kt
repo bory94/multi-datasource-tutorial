@@ -1,7 +1,7 @@
 package com.bory.multidatasourcetutorial.config.secondary
 
+import com.zaxxer.hikari.HikariDataSource
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties
@@ -23,17 +23,12 @@ import javax.sql.DataSource
     transactionManagerRef = "secondaryTransactionManager",
     basePackages = ["com.bory.multidatasourcetutorial.repository.secondary"]
 )
-class SecondaryDatabaseConfig(
-    @Value("\${spring.secondary.datasource.url}") private val url: String,
-    @Value("\${spring.secondary.datasource.username}") private val username: String,
-    @Value("\${spring.secondary.datasource.password}") private val password: String,
-) {
+class SecondaryDatabaseConfig {
 
     @Bean
+    @ConfigurationProperties("spring.secondary.datasource")
     fun secondaryDbDataSource(): DataSource = DataSourceBuilder.create()
-        .url(url)
-        .username(username)
-        .password(password)
+        .type(HikariDataSource::class.java)
         .build()
 
     @Bean

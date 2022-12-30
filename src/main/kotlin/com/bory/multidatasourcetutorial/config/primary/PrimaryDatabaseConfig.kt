@@ -1,7 +1,7 @@
 package com.bory.multidatasourcetutorial.config.primary
 
+import com.zaxxer.hikari.HikariDataSource
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties
@@ -24,18 +24,13 @@ import javax.sql.DataSource
     transactionManagerRef = "primaryTransactionManager",
     basePackages = ["com.bory.multidatasourcetutorial.repository.primary"]
 )
-class PrimaryDatabaseConfig(
-    @Value("\${spring.primary.datasource.url}") private val url: String,
-    @Value("\${spring.primary.datasource.username}") private val username: String,
-    @Value("\${spring.primary.datasource.password}") private val password: String,
-) {
+class PrimaryDatabaseConfig {
 
     @Primary
     @Bean
+    @ConfigurationProperties("spring.primary.datasource")
     fun primaryDbDataSource(): DataSource = DataSourceBuilder.create()
-        .url(url)
-        .username(username)
-        .password(password)
+        .type(HikariDataSource::class.java)
         .build()
 
     @Primary

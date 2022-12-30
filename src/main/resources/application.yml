@@ -2,9 +2,17 @@ spring:
 
   primary:
     datasource:
-      url: jdbc:mysql://localhost:3307/primary_db
+      poolName: primary-cp
+      type: com.zaxxer.hikari.HikariDataSource
+      driverClassName: com.mysql.cj.jdbc.Driver
+      jdbcUrl: jdbc:mysql://localhost:3307/primary_db
       username: root
       password: root
+      auto-commit: false
+      sqlScriptEncoding: UTF-8
+      connectionTimeout: 3000
+      maxLifetime: 60000
+      maximumPoolSize: 5
     jpa:
       hibernate:
         ddl-auto: validate
@@ -22,9 +30,17 @@ spring:
 
   secondary:
     datasource:
-      url: jdbc:mysql://localhost:3307/secondary_db
+      poolName: primary-cp
+      type: com.zaxxer.hikari.HikariDataSource
+      driverClassName: com.mysql.cj.jdbc.Driver
+      jdbcUrl: jdbc:mysql://localhost:3307/secondary_db
       username: root
       password: root
+      auto-commit: false
+      sqlScriptEncoding: UTF-8
+      connectionTimeout: 3000
+      maxLifetime: 60000
+      maximumPoolSize: 5
     jpa:
       hibernate:
         ddl-auto: validate
